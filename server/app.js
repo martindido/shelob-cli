@@ -10,7 +10,7 @@ module.exports = function appConfiguration(done) {
     var routers = require('./routers');
 
     app.disable('x-powered-by');
-    app.use('/public', express.static(__dirname + '/../public'));
+    app.use(express.static(__dirname + '/../public'));
     app.set('views', path.join(__dirname, '/views'));
     app.set('view engine', 'html');
     app.engine('html', ejs.renderFile);
