@@ -9,6 +9,11 @@ module.exports = {
         enabled: false
     },
     provider: {
-        name: 'sql'
+        name: 'sql',
+        options: {
+            name: 'shelob',
+            username: 'root',
+            password: '123456789'
+        }
     }
 };

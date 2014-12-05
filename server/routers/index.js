@@ -2,10 +2,9 @@
 
 var fs = require('fs');
 var path = require('path');
-var express = require('express');
 
 module.exports = function route(app) {
-    fs.readdirSync(__dirname).forEach(function(filename) {
+    fs.readdirSync(__dirname).forEach(function each(filename) {
         var name = path.basename(filename, '.js');
 
         if (name === 'index') {
