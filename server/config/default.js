@@ -7,5 +7,8 @@ module.exports = {
     },
     cluster: {
         enabled: false
+    },
+    provider: {
+        name: 'sql'
     }
 };
