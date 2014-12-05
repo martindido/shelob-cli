@@ -18,9 +18,11 @@
   },
   "homepage": "https://github.com/comodinx/shelob-cli",
   "dependencies": {
-    "asynquence": "0.3.3-b",
+    "asynquence": "~0.3.3-b",
     "ejs": "1.0.0",
     "express": "4.10.4",
-    "underscore": "1.6.0"
+    "underscore": "1.6.0",
+    "sequelize": "~2.0.0-rc3",
+    "mysql": "~2.5.3"
   }
 }
