@@ -1,20 +1,22 @@
 'use strict';
 
-module.exports = function appRouter(app, router) {
+var Router = require('express').Router;
+
+module.exports = function route(callback) {
+    var router = new Router();
 
     function home() {
-        app.get('/', handler);
+        router.get('/', handler);
 
         function handler(req, res, next) {
-            res.render('index', {
-                name: 'Milo'
-            });
+            res.render('index');
         }
 
         return handler;
     }
 
-    return {
+    router.routes = {
         home: home()
     };
+    callback(router);
 };
