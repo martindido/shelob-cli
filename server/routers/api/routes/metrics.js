@@ -11,7 +11,7 @@ module.exports = function route(provider, callback) {
         function handler(req, res, next) {
             provider.get(callback);
 
-            function callback(err, metrics) {
+            function callback(metrics) {
                 res.json(metrics || {});
             }
         }

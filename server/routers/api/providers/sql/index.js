@@ -19,6 +19,12 @@ Sql.prototype.start = function start() {
 }
 
 Sql.prototype.get = function get(callback) {
+    this.models.key.all({
+        include: this.models.metric
+    }).then(callback);
+}
+
+Sql.prototype.getRandom = function getRandom(callback) {
     var now = Date.now();
     var metrics = {};
 
