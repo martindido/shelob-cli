@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/comodinx/shelob-cli"
+    "url": "https://github.com/martindido/shelob-cli"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/comodinx/shelob-cli/issues"
+    "url": "https://github.com/martindido/shelob-cli/issues"
   },
-  "homepage": "https://github.com/comodinx/shelob-cli",
+  "homepage": "https://github.com/martindido/shelob-cli",
   "dependencies": {
     "asynquence": "~0.3.3-b",
     "ejs": "1.0.0",

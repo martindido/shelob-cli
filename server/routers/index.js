@@ -10,7 +10,7 @@ module.exports = function route(app) {
         if (name === 'index') {
             return;
         }
-        require('./' + name)(function callback(routers) {
+        require('./' + name)(app, function callback(routers) {
             if (!Array.isArray(routers)) {
                 routers = [routers];
             }

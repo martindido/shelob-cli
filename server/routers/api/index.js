@@ -6,7 +6,7 @@ var config = require('../../config');
 var Provider = require('./providers').getProvider(config.get(['provider', 'name']));
 var provider = new Provider(config.get(['provider', 'options']));
 
-module.exports = function route(callback) {
+module.exports = function route(app, callback) {
     var routers = [];
 
     fs.readdirSync(__dirname + '/routes').forEach(function each(filename) {
@@ -15,7 +15,7 @@ module.exports = function route(callback) {
         if (name === 'index') {
             return;
         }
-        require('./routes/' + name)(provider, function done(_routers) {
+        require('./routes/' + name)(app, provider, function done(_routers) {
             if (!Array.isArray(_routers)) {
                 _routers = [_routers];
             }

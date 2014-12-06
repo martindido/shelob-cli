@@ -18,8 +18,9 @@ Sql.prototype.start = function start() {
     this.models = new Models(this.database);
 }
 
-Sql.prototype.get = function get(callback) {
-    this.models.key.all({
+Sql.prototype.get = function get(options, callback) {
+    this.models.key.findAll({
+        where: options.where,
         include: this.models.metric
     }).then(callback);
 }

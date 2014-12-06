@@ -21,9 +21,6 @@ html, body {
 
 section {
     height: 100%;
-}
-
-#home {
     text-align: center;
 }
 
@@ -33,4 +30,9 @@ section {
     font-size: 25px;
     color: gray;
     text-shadow: black 0 0 10px;
+}
+
+#metrics {
+    text-align: left;
+    margin-top: 25px;
 }
