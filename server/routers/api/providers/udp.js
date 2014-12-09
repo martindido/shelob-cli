@@ -42,17 +42,17 @@ Udp.prototype.onMessage = function onMessage(messages, remote) {
     messages.toString().split('\n').forEach(function onEach(message) {
         var metric = {
             createdAt: now,
-            Metrics: []
+            Values: []
         };
 
         message = message.split(' ');
         if (!message[0]) {
             return;
         }
-        metric.name = message[0];
-        metric.Metrics.push({
+        metric.key = message[0];
+        metric.Values.push({
             createdAt: now,
-            value: parseInt(message[1])
+            count: parseFloat(message[1])
         });
         metrics.push(metric);
     });

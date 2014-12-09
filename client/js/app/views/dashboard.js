@@ -27,11 +27,11 @@ function render() {
 
 function addMetric(metric) {
     var $metrics = this.$metrics;
-    var $metric = $('<li class="metric">' + metric.get('name') + '</li>');
+    var $metric = $('<li class="metric">' + metric.get('key') + '</li>');
     var $values = $('<ul class="values"></ul>');
 
-    metric.get('values').forEach(function each(value) {
-        $values.append('<li class="value">' + value.createdAt + ': ' + value.value + '</li>');
+    metric.get('Values').forEach(function each(value) {
+        $values.append('<li class="value">' + value.get('createdAt') + ': ' + value.get('count') + '</li>');
     });
     $metrics.append($metric).append($values);
 }

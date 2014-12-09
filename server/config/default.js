@@ -14,7 +14,8 @@ module.exports = {
             options: {
                 name: 'shelob',
                 username: 'root',
-                //password: '123456789'
+                //password: '123456789',
+                options: {}
             }
         },
         realtime: {
