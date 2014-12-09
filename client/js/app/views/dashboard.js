@@ -27,7 +27,7 @@ function render() {
 
 function addMetric(metric) {
     var $metrics = this.$metrics;
-    var $metric = $('<li class="metric" id="metric-' + metric.get('id') + '">' + metric.get('name') + '</li>');
+    var $metric = $('<li class="metric">' + metric.get('name') + '</li>');
     var $values = $('<ul class="values"></ul>');
 
     metric.get('values').forEach(function each(value) {
