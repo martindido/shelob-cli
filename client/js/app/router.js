@@ -2,16 +2,21 @@
 
 var Backbone = require('backbone');
 var HomeView = require('./views/home');
+var DashboardView = require('./views/dashboard');
 
-var Router = Backbone.Router.extend({
+module.exports = Backbone.Router.extend({
     routes: {
         '': 'home',
+        'dashboard': 'dashboard'
     },
-    home: home
+    home: home,
+    dashboard: dashboard
 });
 
 function home() {
     this.app.show(new HomeView());
 }
 
-module.exports = Router;
+function dashboard() {
+    this.app.show(new DashboardView());
+}

@@ -5,10 +5,10 @@ var asynquence = require('asynquence');
 module.exports = function bootstrapApp(worker) {
     var config = require('./config');
 
-    function bootstrap(app) {
+    function bootstrap(app, server) {
         var port = config.get(['server', 'port'], 8080);
 
-        app.listen(port, function onServerListening() {
+        server.listen(port, function onServerListening() {
             if (worker) {
                 return console.log('id:%d pid:%d listening on port %d in %s mode', worker.id, process.pid, port, app.get('env'));
             }

@@ -3,17 +3,17 @@
 module.exports = function(grunt) {
     var browserify = {
         lib: {
-            src: ['public/js/lib/**/*.js'],
+            src: [],
             dest: 'public/js/src/libs.js',
             options: {
-                alias: ['node_modules/backbone/backbone.js:backbone', 'node_modules/underscore/underscore.js:underscore']
+                alias: ['node_modules/backbone/dist/jquery.js:jquery', 'node_modules/backbone/backbone.js:backbone', 'node_modules/underscore/underscore.js:underscore']
             }
         },
         app: {
             src: ['client/js/app/**/*.js'],
             dest: 'public/js/src/app.js',
             options: {
-                alias: []
+                external: ['jquery', 'backbone', 'underscore']
             }
         }
     };

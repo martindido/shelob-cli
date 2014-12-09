@@ -2,7 +2,7 @@
 
 var Router = require('express').Router;
 
-module.exports = function route(callback) {
+module.exports = function route(app, callback) {
     var router = new Router();
 
     function home() {
