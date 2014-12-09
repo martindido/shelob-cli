@@ -8,12 +8,21 @@ module.exports = {
     cluster: {
         enabled: false
     },
-    provider: {
-        name: 'sql',
-        options: {
-            name: 'shelob',
-            username: 'root',
-            //password: '123456789'
+    providers: {
+        historic: {
+            name: 'sql',
+            options: {
+                name: 'shelob',
+                username: 'root',
+                //password: '123456789'
+            }
+        },
+        realtime: {
+            name: 'udp',
+            options: {
+                host: '127.0.0.1',
+                port: 9003,
+            }
         }
     }
 };

@@ -3,8 +3,6 @@
 var fs = require('fs');
 var path = require('path');
 var config = require('../../config');
-var Provider = require('./providers').getProvider(config.get(['provider', 'name']));
-var provider = new Provider(config.get(['provider', 'options']));
 
 module.exports = function route(app, callback) {
     var routers = [];
@@ -15,7 +13,7 @@ module.exports = function route(app, callback) {
         if (name === 'index') {
             return;
         }
-        require('./routes/' + name)(app, provider, function done(_routers) {
+        require('./routes/' + name)(app, function done(_routers) {
             if (!Array.isArray(_routers)) {
                 _routers = [_routers];
             }

@@ -3,37 +3,29 @@
 var Router = require('express').Router;
 var _ = require('underscore');
 
-module.exports = function route(app, provider, callback) {
+module.exports = function route(app, callback) {
     var router = new Router();
+    var providers = require('../providers').getProviders();
 
     function keys() {
         router.get('/', handler);
 
         function handler(req, res, next) {
-            provider.get({}, callback);
+            providers.historic.get({}, callback);
 
             function callback(metrics) {
                 res.json(metrics || []);
             }
         }
 
-        (function mock(argument) {
-            var last = new Date();
+        (function realtime() {
+            if (providers.realtime) {
+                providers.realtime.on('get', callback);
+            }
 
-            setInterval(function onInterval() {
-                provider.get({
-                    where: {
-                        'Metrics.createdAt': {
-                            gte: last
-                        }
-                    }
-                }, callback);
-
-                function callback(metrics) {
-                    last = new Date();
-                    app.io.emit('metrics add', metrics || []);
-                }
-            }, 10000);
+            function callback(metrics) {
+                app.io.emit('metrics add', metrics || []);
+            }
         })();
 
         return handler;
