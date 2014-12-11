@@ -1,6 +1,6 @@
 'use strict';
 
-var Backbone = require('backbone');
+var Backbone = require('backbone-associations');
 
 module.exports = Backbone.View.extend({
     id: 'home',
