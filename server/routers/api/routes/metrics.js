@@ -11,7 +11,33 @@ module.exports = function route(app, callback) {
         router.get('/', handler);
 
         function handler(req, res, next) {
-            providers.historic.get({}, callback);
+            var options;
+            var from = req.param('from');
+            var to = req.param('to');
+
+            if (from) {
+                from = new Date(from);
+            }
+            if (to) {
+                to = new Date(to);
+            }
+            if (from || to) {
+                options = {
+                    where: {
+                        'Values.createdAt': {}
+                    }
+                };
+                if (from && to) {
+                    options.where['Values.createdAt'].between = [from, to];
+                }
+                else if (from) {
+                    options.where['Values.createdAt'].gte = from;
+                }
+                else {
+                    options.where['Values.createdAt'].lte = to;
+                }
+            }
+            providers.historic.get(options || {}, callback);
 
             function callback(metrics) {
                 res.json(metrics || []);

@@ -1,5 +1,12 @@
 'use strict';
 
-var Backbone = require('backbone');
+var Backbone = require('backbone-associations');
 
-module.exports = Backbone.Model.extend({});
+module.exports = Backbone.AssociatedModel.extend({
+    parse: parse
+});
+
+function parse(value) {
+    value.createdAt = new Date(value.createdAt);
+    return value;
+}
