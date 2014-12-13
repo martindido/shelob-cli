@@ -1,6 +1,7 @@
 'use strict';
 
 var dgram = require('dgram');
+var _ = require('underscore');
 var EventEmitter = require('events').EventEmitter;
 
 module.exports = Udp;
@@ -36,27 +37,16 @@ Udp.prototype.onError = function onError(err) {
 };
 
 Udp.prototype.onMessage = function onMessage(messages, remote) {
-    var metrics = [];
-    var now = new Date();
-
-    messages.toString().split('\n').forEach(function onEach(message) {
-        var metric = {
-            createdAt: now,
-            Values: []
-        };
-
+    _.each(messages.toString().split('\n'), function each(message) {
         message = message.split(' ');
         if (!message[0]) {
             return;
         }
-        metric.key = message[0];
-        metric.Values.push({
-            createdAt: now,
-            count: parseFloat(message[1])
+        this.emit('metric', {
+            key: message[0],
+            value: parseFloat(message[1])
         });
-        metrics.push(metric);
-    });
-    this.emit('get', metrics)
+    }, this);
 };
 
 Udp.prototype.on = function on() {

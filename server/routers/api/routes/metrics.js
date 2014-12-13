@@ -11,10 +11,26 @@ module.exports = function route(app, callback) {
         router.get('/', handler);
 
         function handler(req, res, next) {
-            var options;
+            providers.historic.get(getOptions(req) || {}, callback);
+
+            function callback(metrics) {
+                res.json(metrics || []);
+            }
+        }
+
+        function getOptions(req) {
+            var key = req.param('key');
             var from = req.param('from');
             var to = req.param('to');
+            var options = {
+                where: {}
+            };
 
+            if (key) {
+                options.where.key = {
+                    like: key.replace(/\*/g, '%')
+                };
+            }
             if (from) {
                 from = new Date(from);
             }
@@ -22,11 +38,7 @@ module.exports = function route(app, callback) {
                 to = new Date(to);
             }
             if (from || to) {
-                options = {
-                    where: {
-                        'Values.createdAt': {}
-                    }
-                };
+                options.where['Values.createdAt'] = {};
                 if (from && to) {
                     options.where['Values.createdAt'].between = [from, to];
                 }
@@ -37,20 +49,16 @@ module.exports = function route(app, callback) {
                     options.where['Values.createdAt'].lte = to;
                 }
             }
-            providers.historic.get(options || {}, callback);
-
-            function callback(metrics) {
-                res.json(metrics || []);
-            }
+            return _.isEmpty(options.where) ? undefined : options;
         }
 
         (function realtime() {
             if (providers.realtime) {
-                providers.realtime.on('get', callback);
+                providers.realtime.on('metric', callback);
             }
 
-            function callback(metrics) {
-                app.io.emit('metrics add', metrics || []);
+            function callback(metric) {
+                app.io.emit('metric', metric);
             }
         })();
 

@@ -15,7 +15,9 @@ module.exports = Backbone.AssociatedModel.extend({
     }],
     parse: parse,
     total: total,
-    addValues: addValues
+    addValues: addValues,
+    getMax: getMax,
+    getMin: getMin
 });
 
 function parse(value) {
@@ -31,4 +33,12 @@ function total() {
 
 function addValues(values) {
     this.get('Values').add(values.map(Value.prototype.parse));
+}
+
+function getMax() {
+    return this.get('Values').getMax();
+}
+
+function getMin() {
+    return this.get('Values').getMin();
 }
