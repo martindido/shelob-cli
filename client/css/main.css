@@ -49,3 +49,8 @@ section {
   stroke: steelblue;
   stroke-width: 1.5px;
 }
+
+.map {
+  position: relative;
+  margin-top: 50px;
+}
