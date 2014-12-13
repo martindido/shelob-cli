@@ -1,8 +1,6 @@
 'use strict';
 
-var d3 = require('d3');
 var Backbone = require('backbone-associations');
-var Metrics = require('../collections/metrics');
 var charts = require('./charts');
 
 module.exports = Backbone.View.extend({
@@ -13,22 +11,7 @@ module.exports = Backbone.View.extend({
 });
 
 function initialize() {
-    this.from = new Date();
-    this.from.setMinutes(this.from.getMinutes() - 50);
-    this.to = new Date();
-    this.collection = new Metrics();
-    this.chart = new charts.Lines({
-        collection: this.collection,
-        from: this.from,
-        to: this.to
-    });
-    this.collection.fetch({
-        data: {
-            key: 'server10*.test.foo',
-            from: this.from,
-            to: this.to
-        }
-    });
+    this.chart = new charts.Map();
 }
 
 function render() {

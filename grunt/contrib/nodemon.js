@@ -13,7 +13,7 @@ module.exports = function(grunt) {
                     DEBUG: 'shelob-cli:server*,shelob-cli:*:error'
                 },
                 ext: 'js,html',
-                delay: 2000,
+                ignore: ['client', 'public'],
                 callback: function(nodemon) {
                     nodemon.on('log', onLog);
                 }
@@ -26,7 +26,7 @@ module.exports = function(grunt) {
                     DEBUG: 'shelob-cli:*'
                 },
                 ext: 'js,html',
-                delay: 2000,
+                ignore: ['client', 'public'],
                 callback: function(nodemon) {
                     nodemon.on('log', onLog);
                 }

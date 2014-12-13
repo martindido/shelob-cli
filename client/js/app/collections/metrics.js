@@ -9,7 +9,6 @@ var socket = require('../socket');
 module.exports = Backbone.Collection.extend({
     model: Metric,
     url: '/api/metrics',
-    comparator: 'key',
     initialize: initialize,
     clear: clear,
     parse: parse,
@@ -41,14 +40,7 @@ function parse(metrics) {
 }
 
 function addMetric(metric) {
-    var model = this.get(metric.key);
-
-    if (!model) {
-        return;
-    }
-    model.get('Values').add({
-        count: metric.value
-    });
+    this.trigger('get', metric);
 }
 
 function getMax() {
