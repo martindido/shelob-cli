@@ -8,5 +8,11 @@ function get(keys, defaultValue) {
 }
 
 module.exports = {
-    get: get
+    get: get,
+    world: require('./world.json').features.map(function each(country) {
+        return {
+            id: country.id.toLowerCase(),
+            name: country.properties.name.toLowerCase()
+        };
+    })
 };

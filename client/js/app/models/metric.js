@@ -13,12 +13,19 @@ module.exports = Backbone.AssociatedModel.extend({
         collectionType: Values,
         relatedModel: Value
     }],
+    defaults: defaults,
     parse: parse,
     total: total,
     addValues: addValues,
     getMax: getMax,
     getMin: getMin
 });
+
+function defaults(value) {
+    return {
+        Values: new Values()
+    };
+}
 
 function parse(value) {
     value.createdAt = new Date(value.createdAt);

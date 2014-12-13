@@ -2,19 +2,26 @@
 
 var Router = require('express').Router;
 var _ = require('underscore');
+var config = require('../../../config');
 
 module.exports = function route(app, callback) {
     var router = new Router();
     var providers = require('../providers').getProviders();
+    var rDot = /\./g;
+    var rWild = /\*/g;
+    var rCountry = /\{country\}/g;
+    var countries = config.world.map(function each(country) {
+        return country.id;
+    });
 
-    function keys() {
+    function metrics() {
         router.get('/', handler);
 
         function handler(req, res, next) {
             providers.historic.get(getOptions(req) || {}, callback);
 
             function callback(metrics) {
-                res.json(metrics || []);
+                res.json(filter(req, metrics || []));
             }
         }
 
@@ -28,7 +35,7 @@ module.exports = function route(app, callback) {
 
             if (key) {
                 options.where.key = {
-                    like: key.replace(/\*/g, '%')
+                    like: key.replace(rWild, '%').replace(rCountry, '%')
                 };
             }
             if (from) {
@@ -38,6 +45,7 @@ module.exports = function route(app, callback) {
                 to = new Date(to);
             }
             if (from || to) {
+                options.include = providers.historic.models.value;
                 options.where['Values.createdAt'] = {};
                 if (from && to) {
                     options.where['Values.createdAt'].between = [from, to];
@@ -50,6 +58,24 @@ module.exports = function route(app, callback) {
                 }
             }
             return _.isEmpty(options.where) ? undefined : options;
+        }
+
+        function filter(req, metrics) {
+            var key = req.param('key');
+            var rKey;
+
+            if (!metrics.length || !key) {
+                return metrics;
+            }
+            rKey = new RegExp(key.replace(rDot, '\\.').replace(rWild, '.*').replace(rCountry, '([a-z]{3})'));
+            return metrics.filter(function each(metric) {
+                var match = rKey.exec(metric.key);
+
+                if (!match) {
+                    return false;
+                }
+                return _.contains(countries, match[1]);
+            });
         }
 
         (function realtime() {
@@ -68,7 +94,7 @@ module.exports = function route(app, callback) {
 
     router.path = '/metrics';
     router.routes = {
-        keys: keys()
+        metrics: metrics()
     };
     callback(router);
 };
